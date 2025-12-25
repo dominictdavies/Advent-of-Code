@@ -24,6 +24,12 @@ impl Dial {
     }
 }
 
+impl PartialEq<u8> for Dial {
+    fn eq(&self, other: &u8) -> bool {
+        self.0 == *other
+    }
+}
+
 impl fmt::Display for Dial {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}", self.0)
@@ -35,6 +41,7 @@ fn main() {
     let lines: Vec<&str> = input.split('\n').collect();
 
     let mut dial = Dial(DIAL_START);
+    let mut zero_count: u16 = 0;
 
     for line in lines {
         if line == "" {
@@ -52,6 +59,10 @@ fn main() {
             panic!("Direction was not 'L' or 'R'");
         }
 
-        println!("Dial now reads: {dial}");
+        if dial == 0 {
+            zero_count += 1;
+        }
     }
+
+    println!("zero_count: {zero_count}");
 }
